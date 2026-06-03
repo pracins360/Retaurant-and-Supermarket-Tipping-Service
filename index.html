@@ -1,408 +1,93 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Restaurant and Supermarket Tipping Service</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-font-family:Arial,Helvetica,sans-serif;
-background:#f4f7fb;
-color:#122033;
-padding:18px;
-}
-
-.container{
-max-width:700px;
-margin:auto;
-}
-
-.header{
-background:linear-gradient(135deg,#061b33,#0057b8);
-color:white;
-padding:28px 20px;
-border-radius:24px;
-text-align:center;
-margin-bottom:20px;
-}
-
-.header h1{
-font-size:2rem;
-margin-bottom:10px;
-}
-
-.header p{
-opacity:.95;
-}
-
-.card{
-background:white;
-padding:20px;
-border-radius:22px;
-margin-bottom:18px;
-box-shadow:0 8px 22px rgba(0,0,0,.08);
-}
-
-label{
-display:block;
-font-weight:700;
-margin-bottom:8px;
-margin-top:16px;
-}
-
-select,input{
-width:100%;
-padding:16px;
-border-radius:14px;
-border:1px solid #d7dfeb;
-font-size:1rem;
-background:#f8fafc;
-}
-
-.checkboxes{
-margin-top:14px;
-display:grid;
-gap:10px;
-}
-
-.checkbox-item{
-background:#f8fafc;
-padding:14px;
-border-radius:14px;
-border:1px solid #d7dfeb;
-}
-
-button{
-width:100%;
-padding:18px;
-border:none;
-border-radius:999px;
-font-size:1rem;
-font-weight:800;
-cursor:pointer;
-margin-top:20px;
-transition:.2s;
-}
-
-.submit-btn{
-background:#25d366;
-color:white;
-}
-
-.submit-btn:hover{
-background:#1da15a;
-}
-
-.admin-btn{
-background:#061b33;
-color:white;
-}
-
-.small{
-font-size:.85rem;
-color:#66778d;
-margin-top:12px;
-line-height:1.5;
-}
-
-.admin-panel{
-display:none;
-}
-
-.list-box{
-margin-top:16px;
-display:grid;
-gap:10px;
-}
-
-.worker-item{
-background:#f8fafc;
-border:1px solid #d7dfeb;
-padding:12px;
-border-radius:14px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px;
-}
-
-.delete-btn{
-background:#ff4d4d;
-color:white;
-border:none;
-padding:8px 12px;
-border-radius:10px;
-cursor:pointer;
-font-size:.85rem;
-}
-
-.export-btn{
-background:#0057b8;
-color:white;
-}
-
-.clear-btn{
-background:#ff8c00;
-color:white;
-}
-
-.badge{
-background:#ffcc00;
-color:#061b33;
-padding:5px 10px;
-border-radius:999px;
-font-size:.75rem;
-font-weight:800;
-display:inline-block;
-margin-top:10px;
-}
-
-footer{
-text-align:center;
-font-size:.85rem;
-color:#66778d;
-margin-top:25px;
-padding-bottom:20px;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tip.me</title>
+  <style>
+    body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#102033}
+    .app{max-width:480px;margin:auto;padding:16px}
+    .card{background:white;border-radius:24px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+    h1{text-align:center;margin:0 0 6px}
+    .sub{text-align:center;color:#66778d}
+    .photo{width:180px;height:180px;border-radius:50%;object-fit:cover;display:block;margin:20px auto;border:6px solid #25d366}
+    label{display:block;margin-top:16px;font-weight:800}
+    input,select,textarea{width:100%;padding:15px;border-radius:15px;border:1px solid #d7dfeb;font-size:17px;box-sizing:border-box;margin-top:8px}
+    textarea{min-height:80px}
+    button{width:100%;padding:18px;border:none;border-radius:999px;background:#25d366;color:white;font-weight:900;font-size:18px;margin-top:20px}
+    .fee{background:#fff4cc;padding:12px;border-radius:14px;margin-top:16px;font-weight:700;text-align:center}
+  </style>
 </head>
 <body>
-<div class="container">
+<div class="app">
+  <div class="card">
+    <h1>Thank you for your Tip</h1>
+    <p class="sub">No cash? I have Sentoo.</p>
 
-<div class="header">
-<h1>Papia+.mi Tips</h1>
-<p>Scan. Choose. Tip.</p>
-<div class="badge">5% service fee applies</div>
-</div>
+    <img class="photo" src="https://i.ibb.co/3yLMbSyq/20260603-060236.avif">
 
-<div class="card client-panel">
-<h2>Client Area</h2>
-<p class="small">Choose supermarket/restaurant, worker name and tip amount. WhatsApp will open automatically.</p>
+    <label>Worker name</label>
+    <input id="workerName" placeholder="Example: David">
 
-<label>Choose location</label>
-<select id="locationSelect">
-<option>Vreugdenhil</option>
-<option>Centrum Mahaai</option>
-<option>Mangusa Hyper</option>
-</select>
+    <label>Standard tip amount</label>
+    <select id="amount">
+      <option value="5">XCG 5</option>
+      <option value="8">XCG 8</option>
+      <option value="10">XCG 10</option>
+      <option value="15">XCG 15</option>
+      <option value="20">XCG 20</option>
+    </select>
 
-<label>Choose waiter/bagger</label>
-<select id="workerSelect"></select>
+    <label>Other amount optional</label>
+    <input id="otherAmount" type="number" placeholder="Example: 37">
 
-<label>Choose tip amount</label>
-<select id="tipSelect">
-<option>XCG 2</option>
-<option>XCG 5</option>
-<option>XCG 8</option>
-<option>XCG 10</option>
-<option>XCG 15</option>
-<option>XCG 20</option>
-<option>XCG 25</option>
-</select>
+    <label>Description</label>
+    <textarea id="description" placeholder="Thank you for your service."></textarea>
 
-<button class="submit-btn" onclick="submitTip()">Submit via WhatsApp</button>
+    <div class="fee">3% service fee applies</div>
 
-<div class="small">
-After submitting, WhatsApp opens to request the Sentoo payment link.
-</div>
-</div>
-
-<div class="card">
-<h2>Admin Access</h2>
-<p class="small">Only administrator can add or remove names.</p>
-<input type="password" id="adminPin" placeholder="Enter admin PIN">
-<button class="admin-btn" onclick="loginAdmin()">Enter Admin Area</button>
-</div>
-
-<div class="card admin-panel" id="adminPanel">
-<h2>Admin Panel</h2>
-
-<label>Add worker name</label>
-<input type="text" id="newWorker" placeholder="Example: Maria">
-
-<label>Select location</label>
-<select id="adminLocation">
-<option>Vreugdenhil</option>
-<option>Centrum Mahaai</option>
-<option>Mangusa Hyper</option>
-</select>
-
-<label>Worker payout preference</label>
-<select id="workerCycle">
-<option>Weekly</option>
-<option>Biweekly</option>
-<option>Monthly</option>
-</select>
-
-<button class="admin-btn" onclick="addWorker()">Add Worker</button>
-
-<div class="list-box" id="workerList"></div>
-
-<button class="export-btn" onclick="exportCSV()">Export CSV</button>
-<button class="clear-btn" onclick="clearHistory()">Delete History</button>
-
-<div class="small">
-All data stored locally on this device.
-</div>
-</div>
-
-<footer>
-© 2026 Papia+.mi Tips • PracDi Solutions
-</footer>
-
+    <button onclick="sendTip()">Send WhatsApp</button>
+  </div>
 </div>
 
 <script>
-const ADMIN_PIN = '6791';
-const WHATSAPP_NUMBER = '59995120536';
+const API_URL = "PASTE_APPS_SCRIPT_WEB_APP_URL_HERE";
+const WHATSAPP = "59995120536";
 
-let workers = JSON.parse(localStorage.getItem('papiaWorkers')) || {
-'Vreugdenhil':[
-{name:'Maria',cycle:'Weekly'},
-{name:'Kevin',cycle:'Biweekly'}
-],
-'Centrum Mahaai':[
-{name:'Joseph',cycle:'Monthly'},
-{name:'Ana',cycle:'Weekly'}
-],
-'Mangusa Hyper':[
-{name:'David',cycle:'Biweekly'},
-{name:'Luis',cycle:'Monthly'}
-]
-};
+function sendTip(){
+  const worker = document.getElementById("workerName").value.trim();
+  const standard = document.getElementById("amount").value;
+  const other = document.getElementById("otherAmount").value.trim();
+  const description = document.getElementById("description").value.trim() || "Thank you for your service.";
+  const finalAmount = other || standard;
 
-let tipHistory = JSON.parse(localStorage.getItem('papiaTips')) || [];
+  if(!worker){
+    alert("Please enter worker name.");
+    return;
+  }
 
-function saveWorkers(){
-localStorage.setItem('papiaWorkers',JSON.stringify(workers));
+  const data = {
+    worker,
+    amount: "XCG " + finalAmount,
+    description,
+    feePercent: 3
+  };
+
+  fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify(data)
+  }).catch(err => console.log(err));
+
+  const msg =
+    "Hi, I want to tip.\n\n" +
+    "Worker: " + worker + "\n" +
+    "Tip Amount: XCG " + finalAmount + "\n" +
+    "Description: " + description + "\n\n" +
+    "Please send me the Sentoo payment link.";
+
+  window.location.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
 }
-
-function saveHistory(){
-localStorage.setItem('papiaTips',JSON.stringify(tipHistory));
-}
-
-function populateWorkers(){
-const location=document.getElementById('locationSelect').value;
-const workerSelect=document.getElementById('workerSelect');
-workerSelect.innerHTML='';
-
-workers[location].forEach(worker=>{
-const option=document.createElement('option');
-option.value=worker.name;
-option.textContent=worker.name;
-workerSelect.appendChild(option);
-});
-}
-
-function submitTip(){
-const location=document.getElementById('locationSelect').value;
-const worker=document.getElementById('workerSelect').value;
-const amount=document.getElementById('tipSelect').value;
-
-const workerData=workers[location].find(w=>w.name===worker) || {cycle:'Not set'};
-const cycle=workerData.cycle;
-
-const message=`Hi, I want to tip.%0A%0ALocation: ${location}%0AWorker: ${worker}%0ATip Amount: ${amount}%0A%0APlease send me the Sentoo payment link.`;
-
-const entry={
-date:new Date().toLocaleString(),
-location,
-worker,
-amount,
-cycle
-};
-
- tipHistory.push(entry);
- saveHistory();
-
-window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`,'_blank');
-}
-
-function loginAdmin(){
-const pin=document.getElementById('adminPin').value;
-
-if(pin===ADMIN_PIN){
-document.getElementById('adminPanel').style.display='block';
-renderWorkers();
-window.scrollTo(0,document.body.scrollHeight);
-}else{
-alert('Incorrect PIN');
-}
-}
-
-function addWorker(){
-const name=document.getElementById('newWorker').value.trim();
-const location=document.getElementById('adminLocation').value;
-const cycle=document.getElementById('workerCycle').value;
-
-if(!name)return;
-
-workers[location].push({name,cycle});
-saveWorkers();
-populateWorkers();
-renderWorkers();
-
-document.getElementById('newWorker').value='';
-}
-
-function renderWorkers(){
-const workerList=document.getElementById('workerList');
-workerList.innerHTML='';
-
-Object.keys(workers).forEach(location=>{
-workers[location].forEach((worker,index)=>{
-const div=document.createElement('div');
-div.className='worker-item';
-div.innerHTML=`
-<div>
-<strong>${worker.name}</strong><br>
-<small>${location} • Payout: ${worker.cycle}</small>
-</div>
-<button class="delete-btn" onclick="deleteWorker('${location}',${index})">Delete</button>
-`;
-workerList.appendChild(div);
-});
-});
-}
-
-function deleteWorker(location,index){
-workers[location].splice(index,1);
-saveWorkers();
-populateWorkers();
-renderWorkers();
-}
-
-function exportCSV(){
-if(tipHistory.length===0){
-alert('No history available');
-return;
-}
-
-let csv='Date,Location,Worker,Amount,Worker Payout Preference\n';
-
- tipHistory.forEach(row=>{
- csv+=`${row.date},${row.location},${row.worker},${row.amount},${row.cycle}\n`;
- });
-
-const blob=new Blob([csv],{type:'text/csv'});
-const url=URL.createObjectURL(blob);
-
-const a=document.createElement('a');
-a.href=url;
-a.download='papia_tips_history.csv';
-a.click();
-}
-
-function clearHistory(){
-if(confirm('Delete all history?')){
-tipHistory=[];
-saveHistory();
-alert('History deleted');
-}
-}
-
-populateWorkers();
 </script>
 </body>
 </html>
