@@ -35,7 +35,10 @@
       padding: 4px 16px;
       border-radius: 60px;
     }
+    
+    /* Image container with QR overlay */
     .branded-hero {
+      position: relative;
       margin: 8px 0 24px;
       border-radius: 32px;
       overflow: hidden;
@@ -47,6 +50,39 @@
       display: block;
       border-radius: 32px;
     }
+    
+    /* QR Code Overlay */
+    .qr-overlay {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      background: white;
+      padding: 8px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .qr-overlay img {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+    }
+    .qr-overlay span {
+      font-size: 10px;
+      font-weight: bold;
+      color: #1e2a36;
+    }
+    
+    /* For smaller screens */
+    @media (max-width: 480px) {
+      .qr-overlay img { width: 60px; height: 60px; }
+      .qr-overlay { padding: 6px; bottom: 10px; right: 10px; }
+      .qr-overlay span { font-size: 8px; }
+    }
+    
     label { font-weight: 600; font-size: 14px; color: #1e2a36; display: block; margin-top: 18px; margin-bottom: 6px; }
     select, input, textarea {
       width: 100%; padding: 14px 16px; font-size: 16px; border-radius: 28px;
@@ -65,14 +101,7 @@
     }
     button:hover { background: #1da958; transform: scale(0.98); }
     .footer { margin-top: 24px; text-align: center; font-size: 11px; color: #94a3b8; }
-    .user-badge { 
-      text-align: center; 
-      font-size: 12px; 
-      color: #2c5f4a; 
-      margin-top: 8px;
-      font-weight: 500;
-    }
-    @media (max-width: 480px) { .card { padding: 24px 18px 32px; } }
+    .user-badge { text-align: center; font-size: 12px; color: #2c5f4a; margin-top: 8px; font-weight: 500; }
   </style>
 </head>
 <body>
@@ -82,12 +111,16 @@
       <p class="sub">💚 No cash? I have Sentoo 💚</p>
     </div>
 
-    <!-- Image loads dynamically based on URL parameter -->
+    <!-- Image with QR code overlay -->
     <div class="branded-hero">
       <img id="userImage" src="" alt="Sentoo Tipping" border="0">
+      <!-- QR code overlay - automatically generates based on current user URL -->
+      <div class="qr-overlay" id="qrOverlay" style="display: none;">
+        <img id="qrCodeImg" src="" alt="Scan QR">
+        <span>Scan to tip</span>
+      </div>
     </div>
 
-    <!-- Optional: show which user is active -->
     <div id="userBadge" class="user-badge"></div>
 
     <label>💎 Standard tip amount</label>
@@ -112,74 +145,52 @@
     </button>
 
     <div class="footer">
-      Update design in Canva → add new user below
+      Tap button above → WhatsApp message → Receive Sentoo payment link
     </div>
   </div>
 </div>
 
 <script>
   // ======================== USER DATABASE ==========================
-  // Add each user here with their unique image URL and WhatsApp number
-  // ================================================================
   const USERS = {
-    "david": {
-      imageUrl: "https://i.ibb.co/v6nqkx9K/tipping-service.jpg",
+    "purcy": {
+      imageUrl: "https://i.ibb.co/v6nqkx9K/tipping-service.jpg",  // Your current image
       whatsapp: "59995120536",
-      workerName: "David"
+      workerName: "Purcy"
     },
-    "maria": {
-      imageUrl: "https://i.ibb.co/YOUR_MARIA_IMAGE.jpg",
+    "david": {
+      imageUrl: "https://i.ibb.co/YOUR_DAVID_IMAGE.jpg",
       whatsapp: "59995120537",
-      workerName: "Maria"
-    },
-    "john": {
-      imageUrl: "https://i.ibb.co/YOUR_JOHN_IMAGE.jpg",
-      whatsapp: "59995120538",
-      workerName: "John"
-    },
-    "sarah": {
-      imageUrl: "https://i.ibb.co/YOUR_SARAH_IMAGE.jpg",
-      whatsapp: "59995120539",
-      workerName: "Sarah"
+      workerName: "David"
     }
-    // ==============================================================
-    // TO ADD NEW USER: copy the block above, change the name,
-    // imageUrl, whatsapp number, and workerName
-    // ==============================================================
+    // Add more users here
   };
   
-  // Get user from URL parameter: ?user=david
+  // Get user from URL
   const urlParams = new URLSearchParams(window.location.search);
-  const userId = urlParams.get('user') || "david"; // Default to david if no user specified
-  
-  // Check if user exists, fallback to default
-  const currentUser = USERS[userId];
-  
-  if (!currentUser) {
-    console.warn(`User "${userId}" not found, using default`);
-    // Optionally redirect to default user
-    // window.location.href = "?user=david";
-  }
-  
-  const activeUser = currentUser || USERS["david"];
+  const userId = urlParams.get('user') || "purcy";
+  const activeUser = USERS[userId] || USERS["purcy"];
   
   // Set the image
   document.getElementById("userImage").src = activeUser.imageUrl;
   
-  // Show user badge (optional - shows which worker)
-  if (document.getElementById("userBadge")) {
-    document.getElementById("userBadge").innerHTML = `✨ Tipping ${activeUser.workerName} ✨`;
-  }
+  // Show user badge
+  document.getElementById("userBadge").innerHTML = `✨ Tipping ${activeUser.workerName} ✨`;
   
-  // Config for this user
+  // Generate QR code for this user's specific link
+  // Using free QR code API (no account needed)
+  const currentUrl = window.location.href;
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(currentUrl)}`;
+  document.getElementById("qrCodeImg").src = qrCodeUrl;
+  document.getElementById("qrOverlay").style.display = "flex";
+  
+  // Config
   const WHATSAPP = activeUser.whatsapp;
   const WORKER_NAME = activeUser.workerName;
+  const ENABLE_APPS_SCRIPT = false;
+  const API_URL = "";
   
-  // Apps Script config (same for all users)
-  const ENABLE_APPS_SCRIPT = false;  // Set to true when ready
-  const API_URL = "";  // Paste your Apps Script URL here
-  
-  console.log(`Loaded user: ${WORKER_NAME} (${userId}) | WhatsApp: ${WHATSAPP}`);
+  console.log(`Loaded: ${WORKER_NAME} | QR code: ${currentUrl}`);
   
   async function sendTip() {
     const standardSelect = document.getElementById("amount");
@@ -212,7 +223,6 @@
       descriptionField = "Thank you for your service.";
     }
     
-    // Prepare data for Apps Script
     const tipData = {
       worker: WORKER_NAME,
       amount: "XCG " + finalAmount,
@@ -220,43 +230,25 @@
       feePercent: 3
     };
     
-    // Send to Google Sheets if enabled
     if (ENABLE_APPS_SCRIPT && API_URL && API_URL !== "") {
       try {
-        const response = await fetch(API_URL, {
+        await fetch(API_URL, {
           method: "POST",
-          mode: "cors",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(tipData)
         });
-        if (response.ok) {
-          console.log("✅ Tip logged to Google Sheets for", WORKER_NAME);
-        }
+        console.log("✅ Tip logged to Sheets");
       } catch (err) {
-        console.error("❌ Error saving to Sheets:", err);
+        console.error("❌ Error:", err);
       }
-    } else {
-      console.log("📝 Demo Mode - Tip for", WORKER_NAME, ":", tipData);
     }
     
-    // ==============================================================
-    // WhatsApp message format: 
-    // "David | XCG 10 | Exceptional service | Please send me a Sentoo order"
-    // ==============================================================
+    // WhatsApp message format
     const msg = `${WORKER_NAME} | XCG ${finalAmount} | ${descriptionField} | Please send me a Sentoo order`;
-    
-    // Create WhatsApp URL and redirect
     const whatsappUrl = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
     
-    console.log("📱 Sending WhatsApp message:", msg);
+    console.log("📱 Sending:", msg);
     window.location.href = whatsappUrl;
-  }
-  
-  // Display available users in console (helpful for testing)
-  console.log("📋 Available users:", Object.keys(USERS).join(", "));
-  console.log("💡 Example links:");
-  for (const [key, user] of Object.entries(USERS)) {
-    console.log(`   ${user.workerName}: ?user=${key}`);
   }
 </script>
 </body>
