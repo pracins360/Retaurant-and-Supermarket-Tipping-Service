@@ -64,7 +64,6 @@
       letter-spacing: -0.2px;
     }
 
-    /* profile row styling (restored & refined) */
     .profile-row {
       display: flex;
       justify-content: center;
@@ -128,7 +127,6 @@
       margin-top: 4px;
     }
 
-    /* form elements */
     label {
       font-weight: 600;
       font-size: 14px;
@@ -196,7 +194,6 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    /* new badge / tip footer */
     .tip-footer {
       margin-top: 26px;
       text-align: center;
@@ -215,7 +212,17 @@
       border-radius: 40px;
     }
 
-    /* responsive */
+    .demo-badge {
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 11px;
+      padding: 4px 12px;
+      border-radius: 30px;
+      display: inline-block;
+      margin-top: 8px;
+      font-weight: 600;
+    }
+
     @media (max-width: 480px) {
       .card {
         padding: 24px 18px 32px;
@@ -257,7 +264,7 @@
       <p class="sub">💚 No cash? I have Sentoo. 💚</p>
     </div>
 
-    <!-- Restored photo row with images (fixed broken img src syntax) -->
+    <!-- Restored profile photo row -->
     <div class="profile-row">
       <img class="side-photo blur" src="https://www.image2url.com/r2/default/images/1780543087610-318f611c-a716-499f-aa3e-9c4130b5cc80.avif" alt="blur avatar left">
       <img class="side-photo avatar" src="https://www.image2url.com/r2/default/images/1780543167318-79487051-d0dd-419b-b95d-c1abe191bc6c.webp" alt="avatar left">
@@ -279,11 +286,11 @@
       <option value="20">XCG 20</option>
     </select>
 
-    <!-- Other amount optional (custom tip) -->
+    <!-- Other amount optional -->
     <label>💰 Other amount (optional)</label>
     <input id="otherAmount" type="number" placeholder="Example: 37" step="1" min="1">
 
-    <!-- Description field - pre-filled friendly message -->
+    <!-- Description field -->
     <label>📝 Description</label>
     <textarea id="description" placeholder="Thank you for your service.">Exceptional service, great atmosphere!</textarea>
 
@@ -294,7 +301,7 @@
       <span>📱</span> Send WhatsApp Tip
     </button>
 
-    <!-- ADDED tipping service image banner (from imgbb link) with proper formatting -->
+    <!-- Added tipping service image (imgbb link) -->
     <div class="tip-footer">
       <div class="brand-icon">
         <span>✨</span> <span>instant gratitude</span>
@@ -307,25 +314,33 @@
       <div class="image-attribution">
         <span>❤️ digital tipping made easy</span>
       </div>
+      <!-- Demo mode indicator (GitHub friendly) -->
+      <div class="demo-badge">
+        ⚡ GitHub Demo Mode · Apps Script ready to connect
+      </div>
     </div>
   </div>
 </div>
 
 <script>
   // ======================== CONFIGURATION ==========================
-  // ⚠️ IMPORTANT: Replace this URL with your actual Google Apps Script Web App URL 
-  // (the doPost endpoint). After deploying your GS script as web app, copy the URL and paste below.
-  const API_URL = "PASTE_APPS_SCRIPT_WEB_APP_URL_HERE";   // <-- REPLACE WITH YOUR SCRIPT URL
+  // 🔧 GITHUB DEMO MODE: Apps Script integration is DISABLED by default
+  // 📌 TO ENABLE APPS SCRIPT LATER: 
+  //    1. Deploy your GS script as Web App
+  //    2. Copy the URL and paste it below
+  //    3. Change ENABLE_APPS_SCRIPT to true
+  // ================================================================
   
-  // WhatsApp number for receiving tip notifications (business/personal)
+  const ENABLE_APPS_SCRIPT = false;  // Set to true when you have Apps Script URL
+  const API_URL = "";  // Paste your Apps Script URL here: "https://script.google.com/macros/s/.../exec"
+  
+  // WhatsApp number (your existing number)
   const WHATSAPP = "59995120536";
   
-  // Worker name is fixed to "Purcy" as per design – removed any 'worker name' input field.
-  // That matches the requirement: "remove label :workers name example 'david'".
-  // We'll automatically use the displayed name "Purcy".
+  // Worker name is fixed to "Purcy" (removed input label as requested)
   const WORKER_NAME = "Purcy";
   
-  // Function to send tip data to Google Sheets and redirect to WhatsApp
+  // Function to send tip data (GitHub-ready with optional Apps Script)
   async function sendTip() {
     // Get selected standard tip value
     const standardSelect = document.getElementById("amount");
@@ -337,8 +352,7 @@
     
     let finalAmount = "";
     
-    // Validation: if other amount is provided and is a positive number, use it;
-    // otherwise fallback to standard tip amount (selected dropdown)
+    // Validation: if other amount provided and valid, use it; otherwise use standard
     if (otherAmountRaw !== "") {
       const parsedOther = parseFloat(otherAmountRaw);
       if (!isNaN(parsedOther) && parsedOther > 0) {
@@ -351,35 +365,32 @@
       finalAmount = standardValue;
     }
     
-    // Ensure finalAmount is a positive number (safety)
+    // Ensure finalAmount is positive
     if (!finalAmount || parseFloat(finalAmount) <= 0) {
       alert("Please select a valid tip amount (minimum 1 XCG).");
       return;
     }
     
-    // Description field: get value, if empty use default friendly message
+    // Get description
     let descriptionField = document.getElementById("description").value.trim();
     if (descriptionField === "") {
       descriptionField = "Thank you for your service.";
     }
     
-    // Build data object matching Google Sheets script schema:
-    // { worker, amount, description, feePercent }
+    // Build data object for Apps Script (same format as your GS expects)
     const tipData = {
-      worker: WORKER_NAME,           // fixed worker "Purcy"
+      worker: WORKER_NAME,
       amount: "XCG " + finalAmount,
       description: descriptionField,
-      feePercent: 3                 // 3% service fee as shown in UI
+      feePercent: 3
     };
     
-    // --- Send data to Google Apps Script Web App (if URL is configured) ---
-    // We only call the API if the user replaced the placeholder.
-    let apiCallSuccess = false;
-    if (API_URL && API_URL !== "PASTE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+    // --- ONLY call Apps Script if enabled AND URL is configured ---
+    if (ENABLE_APPS_SCRIPT && API_URL && API_URL !== "") {
       try {
         const response = await fetch(API_URL, {
           method: "POST",
-          mode: "cors",               // standard; Apps Script handles CORS
+          mode: "cors",
           headers: {
             "Content-Type": "application/json"
           },
@@ -390,23 +401,23 @@
           const result = await response.json();
           if (result && result.ok === true) {
             console.log("✅ Tip logged to Google Sheets successfully");
-            apiCallSuccess = true;
           } else {
-            console.warn("⚠️ API responded but ok flag missing", result);
+            console.warn("⚠️ API response:", result);
           }
         } else {
           console.error("❌ HTTP error from Apps Script:", response.status);
         }
       } catch (err) {
-        console.error("❌ Network / Script error while saving tip:", err);
-        // do not block WhatsApp redirect, just log error.
+        console.error("❌ Error saving tip to Sheets:", err);
+        // Don't block WhatsApp redirect, just log error
       }
     } else {
-      console.warn("⚠️ Google Apps Script URL not configured. Tip not saved to spreadsheet. Please replace API_URL.");
-      // In demo / testing mode, we still proceed with WhatsApp but notify developer via console.
+      // GitHub demo mode: just log to console
+      console.log("📝 GitHub Demo Mode - Tip data (not sent to Sheets):", tipData);
+      console.log("ℹ️ To enable Google Sheets logging, set ENABLE_APPS_SCRIPT = true and add your API_URL");
     }
     
-    // Prepare WhatsApp message exactly as expected (including line breaks and Sentoo payment link request)
+    // Prepare WhatsApp message
     const msg = 
       "Hi, I want to tip.\n\n" +
       "Worker: " + WORKER_NAME + "\n" +
@@ -414,28 +425,14 @@
       "Description: " + descriptionField + "\n\n" +
       "Please send me the Sentoo payment link.";
     
-    // Encode message and redirect to WhatsApp
+    // Redirect to WhatsApp
     const whatsappUrl = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
-    
-    // Additional safety: if fetch taking long, still redirect quickly.
-    // We'll use window.location after a micro delay to ensure fetch is triggered,
-    // but not blocking user experience. For smoother behavior, we can call it and redirect.
-    // However, to avoid any redirect blocking due to async, we open WhatsApp directly.
     window.location.href = whatsappUrl;
   }
   
-  // Optional: Provide inline hint if API_URL placeholder remains, show console warning only once
-  (function checkConfig() {
-    if (!API_URL || API_URL === "PASTE_APPS_SCRIPT_WEB_APP_URL_HERE") {
-      console.warn("🔧 [Tip.me] Google Apps Script URL missing. Tip data will NOT be saved to Google Sheets. Update the 'API_URL' constant with your deployed web app URL.");
-      // add non-intrusive banner? but not required. Only dev hint.
-    }
-  })();
+  // Display console message on load (GitHub friendly)
+  console.log("🎉 Tip.me loaded - GitHub Demo Mode active");
+  console.log("📌 To connect Apps Script: Set ENABLE_APPS_SCRIPT = true and add your API_URL");
 </script>
-
-<!-- Ensure GS script usage: The provided doPost(e) function is fully compatible.
-     It expects JSON: {worker, amount, description, feePercent}
-     and logs into sheet "tips" with columns: date, worker, amount, description, fee_percent, sentoo_status, payout_status
-     Since we match exactly, data will be correctly stored. -->
 </body>
 </html>
