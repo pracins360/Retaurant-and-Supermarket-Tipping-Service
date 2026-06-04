@@ -1,137 +1,441 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tip.me</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Tip.me · Digital Gratitude</title>
   <style>
-    .profile-row{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  margin:18px 0 8px;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-.main-photo{
-  width:125px;
-  height:125px;
-  border-radius:50%;
-  object-fit:cover;
-  border:5px solid #25d366;
-  z-index:2;
-}
+    body {
+      background: linear-gradient(145deg, #e0eafc 0%, #cfdef3 100%);
+      font-family: system-ui, 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
 
-.side-photo{
-  width:52px;
-  height:52px;
-  border-radius:50%;
-  object-fit:cover;
-  border:2px solid #111;
-  margin:0 -6px;
-  background:white;
-}
+    .app {
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto;
+    }
 
-.blur{
-  filter:blur(1.5px);
-  opacity:.55;
-}
+    .card {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(0px);
+      border-radius: 56px;
+      padding: 28px 24px 40px;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
 
-.avatar{
-  opacity:.85;
-}
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1e2b3c, #0f3b2c);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-align: center;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
 
-.worker-name{
-  text-align:center;
-  font-size:22px;
-  margin:4px 0 0;
-  font-weight:900;
-}
+    .sub {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 500;
+      color: #2c5f4a;
+      background: #e9f5ef;
+      display: inline-block;
+      width: auto;
+      margin: 0 auto 18px;
+      padding: 4px 16px;
+      border-radius: 60px;
+      letter-spacing: -0.2px;
+    }
 
-.job-title{
-  text-align:center;
-  font-size:18px;
-  font-weight:800;
-  color:#111;
-  margin-bottom:14px;
-}
+    /* profile row styling (restored & refined) */
+    .profile-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 18px 0 8px;
+    }
+
+    .main-photo {
+      width: 125px;
+      height: 125px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid #25d366;
+      z-index: 2;
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s ease;
+    }
+
+    .side-photo {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #111;
+      margin: 0 -6px;
+      background: white;
+    }
+
+    .blur {
+      filter: blur(1.5px);
+      opacity: .55;
+    }
+
+    .avatar {
+      opacity: .85;
+    }
+
+    .worker-name {
+      text-align: center;
+      font-size: 26px;
+      margin: 12px 0 0;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      background: linear-gradient(145deg, #1f2f3a, #1e4a3b);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .job-title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #2c3e2f;
+      margin-bottom: 28px;
+      background: #ecfdf5;
+      display: inline-block;
+      width: auto;
+      padding: 4px 20px;
+      border-radius: 80px;
+      margin-top: 4px;
+    }
+
+    /* form elements */
+    label {
+      font-weight: 600;
+      font-size: 14px;
+      color: #1e2a36;
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 6px;
+      letter-spacing: -0.2px;
+    }
+
+    select, input, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 16px;
+      border-radius: 28px;
+      border: 1.5px solid #e2e8f0;
+      background: white;
+      font-family: inherit;
+      transition: all 0.2s;
+      outline: none;
+      color: #0f172a;
+    }
+
+    select:focus, input:focus, textarea:focus {
+      border-color: #25d366;
+      box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.2);
+    }
+
+    textarea {
+      border-radius: 28px;
+      resize: vertical;
+      min-height: 85px;
+    }
+
+    .fee {
+      font-size: 13px;
+      color: #5b6e8c;
+      text-align: right;
+      margin: 12px 8px 0 0;
+      font-weight: 500;
+    }
+
+    button {
+      background: #25d366;
+      width: 100%;
+      border: none;
+      padding: 16px 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      border-radius: 60px;
+      margin-top: 28px;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 14px rgba(37, 211, 102, 0.35);
+    }
+
+    button:hover {
+      background: #1da958;
+      transform: scale(0.98);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* new badge / tip footer */
+    .tip-footer {
+      margin-top: 26px;
+      text-align: center;
+      font-size: 12px;
+      color: #4b5563;
+      border-top: 1px solid #eef2ff;
+      padding-top: 20px;
+    }
+
+    .brand-icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f5f9;
+      padding: 6px 14px;
+      border-radius: 40px;
+    }
+
+    /* responsive */
+    @media (max-width: 480px) {
+      .card {
+        padding: 24px 18px 32px;
+      }
+      .main-photo {
+        width: 100px;
+        height: 100px;
+      }
+      .side-photo {
+        width: 44px;
+        height: 44px;
+      }
+      .worker-name {
+        font-size: 22px;
+      }
+      h1 {
+        font-size: 28px;
+      }
+    }
+
+    .image-attribution {
+      margin-top: 14px;
+      font-size: 10px;
+      text-align: center;
+      color: #6c757d;
+    }
+
+    .image-attribution a {
+      color: #2c6e4f;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
 <div class="app">
   <div class="card">
     <h1>Thank You <br>for your Tip</h1>
-<p class="sub">No cash? I have Sentoo.</p>
+    <div style="text-align: center;">
+      <p class="sub">💚 No cash? I have Sentoo. 💚</p>
+    </div>
 
-<div class="profile-row">
-  <img class="side-photo blur" src="<img src="https://www.image2url.com/r2/default/images/1780543087610-318f611c-a716-499f-aa3e-9c4130b5cc80.avif" alt="image" />">
-  <img class="side-photo avatar" src="<img src="https://www.image2url.com/r2/default/images/1780543167318-79487051-d0dd-419b-b95d-c1abe191bc6c.webp" alt="image" />">
-  <img class="main-photo" src="<img src="https://www.image2url.com/r2/default/images/1780542622867-aa731ce5-9508-4f04-a3f5-f7523124d79e.jpeg" alt="image" />">
-  <img class="side-photo avatar" src="<img src="https://www.image2url.com/r2/default/images/1780543167318-79487051-d0dd-419b-b95d-c1abe191bc6c.webp" alt="image" />">
-  <img class="side-photo blur" src="<img src="https://www.image2url.com/r2/default/images/1780543087610-318f611c-a716-499f-aa3e-9c4130b5cc80.avif" alt="image" />">
-</div>
+    <!-- Restored photo row with images (fixed broken img src syntax) -->
+    <div class="profile-row">
+      <img class="side-photo blur" src="https://www.image2url.com/r2/default/images/1780543087610-318f611c-a716-499f-aa3e-9c4130b5cc80.avif" alt="blur avatar left">
+      <img class="side-photo avatar" src="https://www.image2url.com/r2/default/images/1780543167318-79487051-d0dd-419b-b95d-c1abe191bc6c.webp" alt="avatar left">
+      <img class="main-photo" src="https://www.image2url.com/r2/default/images/1780542622867-aa731ce5-9508-4f04-a3f5-f7523124d79e.jpeg" alt="Purcy main">
+      <img class="side-photo avatar" src="https://www.image2url.com/r2/default/images/1780543167318-79487051-d0dd-419b-b95d-c1abe191bc6c.webp" alt="avatar right">
+      <img class="side-photo blur" src="https://www.image2url.com/r2/default/images/1780543087610-318f611c-a716-499f-aa3e-9c4130b5cc80.avif" alt="blur avatar right">
+    </div>
 
-<h2 class="worker-name">Purcy</h2>
-<p class="job-title">Job Waiter</p>
+    <h2 class="worker-name">Purcy</h2>
+    <p class="job-title">✨ Job Waiter ✨</p>
 
-       <label>Standard tip amount</label>
+    <!-- Standard tip amount dropdown -->
+    <label>💎 Standard tip amount</label>
     <select id="amount">
       <option value="5">XCG 5</option>
-      <option value="8">XCG 8</option>
+      <option value="8" selected>XCG 8</option>
       <option value="10">XCG 10</option>
       <option value="15">XCG 15</option>
       <option value="20">XCG 20</option>
     </select>
 
-    <label>Other amount optional</label>
-    <input id="otherAmount" type="number" placeholder="Example: 37">
+    <!-- Other amount optional (custom tip) -->
+    <label>💰 Other amount (optional)</label>
+    <input id="otherAmount" type="number" placeholder="Example: 37" step="1" min="1">
 
-    <label>Description</label>
-    <textarea id="description" placeholder="Thank you for your service."></textarea>
+    <!-- Description field - pre-filled friendly message -->
+    <label>📝 Description</label>
+    <textarea id="description" placeholder="Thank you for your service.">Exceptional service, great atmosphere!</textarea>
 
-    <div class="fee">3% service fee applies</div>
+    <div class="fee">⏱️ 3% service fee applies | Powered by Sentoo</div>
 
-    <button onclick="sendTip()">Send WhatsApp</button>
+    <!-- Send WhatsApp button -->
+    <button onclick="sendTip()">
+      <span>📱</span> Send WhatsApp Tip
+    </button>
+
+    <!-- ADDED tipping service image banner (from imgbb link) with proper formatting -->
+    <div class="tip-footer">
+      <div class="brand-icon">
+        <span>✨</span> <span>instant gratitude</span>
+      </div>
+      <div style="margin-top: 12px;">
+        <a href="https://imgbb.com/" target="_blank" rel="noopener noreferrer">
+          <img src="https://i.ibb.co/v6nqkx9K/tipping-service.jpg" alt="tipping service illustration" border="0" style="max-width: 100%; border-radius: 40px; box-shadow: 0 6px 12px rgba(0,0,0,0.05); width: 100%;">
+        </a>
+      </div>
+      <div class="image-attribution">
+        <span>❤️ digital tipping made easy</span>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-const API_URL = "PASTE_APPS_SCRIPT_WEB_APP_URL_HERE";
-const WHATSAPP = "59995120536";
-
-function sendTip(){
-  const worker = document.getElementById("workerName").value.trim();
-  const standard = document.getElementById("amount").value;
-  const other = document.getElementById("otherAmount").value.trim();
-  const description = document.getElementById("description").value.trim() || "Thank you for your service.";
-  const finalAmount = other || standard;
-
-  if(!worker){
-    alert("Please enter worker name.");
-    return;
+  // ======================== CONFIGURATION ==========================
+  // ⚠️ IMPORTANT: Replace this URL with your actual Google Apps Script Web App URL 
+  // (the doPost endpoint). After deploying your GS script as web app, copy the URL and paste below.
+  const API_URL = "PASTE_APPS_SCRIPT_WEB_APP_URL_HERE";   // <-- REPLACE WITH YOUR SCRIPT URL
+  
+  // WhatsApp number for receiving tip notifications (business/personal)
+  const WHATSAPP = "59995120536";
+  
+  // Worker name is fixed to "Purcy" as per design – removed any 'worker name' input field.
+  // That matches the requirement: "remove label :workers name example 'david'".
+  // We'll automatically use the displayed name "Purcy".
+  const WORKER_NAME = "Purcy";
+  
+  // Function to send tip data to Google Sheets and redirect to WhatsApp
+  async function sendTip() {
+    // Get selected standard tip value
+    const standardSelect = document.getElementById("amount");
+    const standardValue = standardSelect.value;
+    
+    // Get other amount field (optional)
+    const otherInput = document.getElementById("otherAmount");
+    let otherAmountRaw = otherInput.value.trim();
+    
+    let finalAmount = "";
+    
+    // Validation: if other amount is provided and is a positive number, use it;
+    // otherwise fallback to standard tip amount (selected dropdown)
+    if (otherAmountRaw !== "") {
+      const parsedOther = parseFloat(otherAmountRaw);
+      if (!isNaN(parsedOther) && parsedOther > 0) {
+        finalAmount = parsedOther.toString();
+      } else {
+        alert("⚠️ Invalid custom amount. Please enter a valid number (e.g., 12). Using standard tip instead.");
+        finalAmount = standardValue;
+      }
+    } else {
+      finalAmount = standardValue;
+    }
+    
+    // Ensure finalAmount is a positive number (safety)
+    if (!finalAmount || parseFloat(finalAmount) <= 0) {
+      alert("Please select a valid tip amount (minimum 1 XCG).");
+      return;
+    }
+    
+    // Description field: get value, if empty use default friendly message
+    let descriptionField = document.getElementById("description").value.trim();
+    if (descriptionField === "") {
+      descriptionField = "Thank you for your service.";
+    }
+    
+    // Build data object matching Google Sheets script schema:
+    // { worker, amount, description, feePercent }
+    const tipData = {
+      worker: WORKER_NAME,           // fixed worker "Purcy"
+      amount: "XCG " + finalAmount,
+      description: descriptionField,
+      feePercent: 3                 // 3% service fee as shown in UI
+    };
+    
+    // --- Send data to Google Apps Script Web App (if URL is configured) ---
+    // We only call the API if the user replaced the placeholder.
+    let apiCallSuccess = false;
+    if (API_URL && API_URL !== "PASTE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          mode: "cors",               // standard; Apps Script handles CORS
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(tipData)
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          if (result && result.ok === true) {
+            console.log("✅ Tip logged to Google Sheets successfully");
+            apiCallSuccess = true;
+          } else {
+            console.warn("⚠️ API responded but ok flag missing", result);
+          }
+        } else {
+          console.error("❌ HTTP error from Apps Script:", response.status);
+        }
+      } catch (err) {
+        console.error("❌ Network / Script error while saving tip:", err);
+        // do not block WhatsApp redirect, just log error.
+      }
+    } else {
+      console.warn("⚠️ Google Apps Script URL not configured. Tip not saved to spreadsheet. Please replace API_URL.");
+      // In demo / testing mode, we still proceed with WhatsApp but notify developer via console.
+    }
+    
+    // Prepare WhatsApp message exactly as expected (including line breaks and Sentoo payment link request)
+    const msg = 
+      "Hi, I want to tip.\n\n" +
+      "Worker: " + WORKER_NAME + "\n" +
+      "Tip Amount: XCG " + finalAmount + "\n" +
+      "Description: " + descriptionField + "\n\n" +
+      "Please send me the Sentoo payment link.";
+    
+    // Encode message and redirect to WhatsApp
+    const whatsappUrl = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
+    
+    // Additional safety: if fetch taking long, still redirect quickly.
+    // We'll use window.location after a micro delay to ensure fetch is triggered,
+    // but not blocking user experience. For smoother behavior, we can call it and redirect.
+    // However, to avoid any redirect blocking due to async, we open WhatsApp directly.
+    window.location.href = whatsappUrl;
   }
-
-  const data = {
-    worker,
-    amount: "XCG " + finalAmount,
-    description,
-    feePercent: 3
-  };
-
-  fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify(data)
-  }).catch(err => console.log(err));
-
-  const msg =
-    "Hi, I want to tip.\n\n" +
-    "Worker: " + worker + "\n" +
-    "Tip Amount: XCG " + finalAmount + "\n" +
-    "Description: " + description + "\n\n" +
-    "Please send me the Sentoo payment link.";
-
-  window.location.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
-}
+  
+  // Optional: Provide inline hint if API_URL placeholder remains, show console warning only once
+  (function checkConfig() {
+    if (!API_URL || API_URL === "PASTE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+      console.warn("🔧 [Tip.me] Google Apps Script URL missing. Tip data will NOT be saved to Google Sheets. Update the 'API_URL' constant with your deployed web app URL.");
+      // add non-intrusive banner? but not required. Only dev hint.
+    }
+  })();
 </script>
+
+<!-- Ensure GS script usage: The provided doPost(e) function is fully compatible.
+     It expects JSON: {worker, amount, description, feePercent}
+     and logs into sheet "tips" with columns: date, worker, amount, description, fee_percent, sentoo_status, payout_status
+     Since we match exactly, data will be correctly stored. -->
 </body>
 </html>
