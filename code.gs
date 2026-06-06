@@ -10,7 +10,8 @@ const USERS = {
   purcy: {
     name: "Purcy",
     title: "Waiter",
-    banner: "YOUR_BANNER_IMAGE_URL",
+    banner: "const BANNER_URL =
+"https://i.ibb.co/C3G8Q5LT/tipping-service.jpg";",
     whatsapp: "59995120536",
     activeUntil: "2026-06-17",
     backupUntil: "2026-07-01",
@@ -27,3 +28,6 @@ const USERS = {
     }
   }
 };
+function pay(amount){
+  window.location.href = SENTOO_LINKS[amount];
+}
