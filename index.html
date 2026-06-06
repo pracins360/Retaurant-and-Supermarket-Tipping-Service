@@ -31,7 +31,7 @@
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     }
 
-    /* Banner Image */
+    /* Banner Image - REPLACED with your new URL */
     .banner {
       width: 100%;
       height: auto;
@@ -264,9 +264,9 @@
 <body>
 <div class="container">
   <div class="card">
-    <!-- Banner Image -->
+    <!-- Banner Image - UPDATED with your exact URL: https://i.ibb.co/20JjwRrP/tipme-banner.png -->
     <div class="banner">
-      <img src="<img src="https://i.ibb.co/20JjwRrP/tipme-banner.png" alt="image" />" alt="Tip.me Service">
+      <img src="https://i.ibb.co/20JjwRrP/tipme-banner.png" alt="Tip.me Service - Tips Made Simple">
     </div>
 
     <div class="content">
@@ -275,17 +275,17 @@
         <div class="badge">💚 No cash? I have Sentoo 💚</div>
       </div>
 
-      <!-- Title -->
+      <!-- Title Section matching your UI description -->
       <div class="title-section" style="text-align: center;">
         <h1>TIP.ME</h1>
         <div class="subtitle">TIPS MADE SIMPLE</div>
         <div class="subtitle" style="font-size: 12px; color: #999; margin-top: 6px;">Support great service. Enjoy.</div>
       </div>
 
-      <!-- Standard Amounts Label -->
+      <!-- STANDARD AMOUNTS section exactly as you requested -->
       <div class="section-label">STANDARD AMOUNTS</div>
 
-      <!-- Tip Grid -->
+      <!-- Tip Grid with ALL required buttons: 5,10,15,20,25,30,50,Other -->
       <div class="tip-grid">
         <button class="tip-btn" data-tip="5">5</button>
         <button class="tip-btn" data-tip="10">10</button>
@@ -297,25 +297,26 @@
         <button class="tip-btn other-btn" id="otherStandardBtn">Other</button>
       </div>
 
-      <!-- Other Amount Input (hidden by default) -->
+      <!-- Other Amount Input (hidden by default, appears when 'Other' is clicked) -->
       <div class="other-amount-container" id="otherAmountContainer" style="display: none;">
         <input type="number" id="otherAmount" class="other-input" placeholder="Enter custom amount (XCG)" min="1" step="1">
       </div>
 
-      <!-- Description Label -->
+      <!-- Description field matches your UI: "Description" with pre-filled text -->
       <div class="description-label">Description</div>
       <textarea id="description" placeholder="Add a personal message...">Exceptional service, great atmosphere!</textarea>
 
-      <!-- Send WhatsApp Button -->
+      <!-- Send WhatsApp Tip Button -->
       <button class="send-btn" id="sendWhatsAppBtn">
         <span>📱</span> Send WhatsApp Tip
       </button>
 
+      <!-- Footer with helper text -->
       <div class="footer">
         Tap button → WhatsApp message → Receive Sentoo payment link
       </div>
 
-      <!-- User Badge (dynamic) -->
+      <!-- Dynamic user badge (supports multiple staff: ?user=purcy or ?user=david) -->
       <div id="userBadge" class="user-badge"></div>
     </div>
   </div>
@@ -323,6 +324,7 @@
 
 <script>
   // ======================== USER DATABASE ==========================
+  // Each team member gets their own WhatsApp number and Sentoo payment links
   const USERS = {
     "purcy": {
       whatsapp: "59995120536",
@@ -356,49 +358,49 @@
         50: "https://pay.sentoo.me/p/david_50_link"
       }
     }
+    // ➕ Add more team members here following the same pattern
   };
 
-  // Get user from URL (?user=purcy or ?user=david)
+  // Get user from URL parameter: ?user=purcy  or  ?user=david
   const urlParams = new URLSearchParams(window.location.search);
   let userId = urlParams.get('user');
   if (!userId || !USERS[userId.toLowerCase()]) {
-    userId = "purcy";
+    userId = "purcy";   // Default user if none specified or invalid
   } else {
     userId = userId.toLowerCase();
   }
   const activeUser = USERS[userId];
 
-  // Update user badge
+  // Display the correct worker name in the badge
   document.getElementById("userBadge").innerHTML = `✨ Tipping ${activeUser.workerName} ✨`;
   document.title = `Tip ${activeUser.workerName} · Tip.me`;
 
-  // Variables
-  let selectedAmount = null;
-  let isOtherAmountMode = false;
-
-  // Helper: Get Sentoo payment link
+  // Helper: get the Sentoo payment link for a given amount
   function getSentooLink(amount) {
     const numAmount = Number(amount);
     if (activeUser.sentooLinks && activeUser.sentooLinks[numAmount]) {
       return activeUser.sentooLinks[numAmount];
     }
-    // Fallback for custom amounts - use generic link
-    alert("Custom amount support coming soon. Please use standard amounts for direct payment.");
+    // Friendly alert for missing custom link (should not happen for standard amounts)
+    console.warn(`No Sentoo link configured for amount ${amount}`);
     return null;
   }
 
-  // Handle tip button clicks (direct payment)
+  // DIRECT PAYMENT: When user clicks a standard tip button (5,10,15,20,25,30,50)
   document.querySelectorAll('.tip-btn[data-tip]').forEach(btn => {
     btn.addEventListener('click', () => {
       const amount = btn.getAttribute('data-tip');
       const link = getSentooLink(amount);
       if (link) {
+        // Redirect directly to Sentoo payment page
         window.location.href = link;
+      } else {
+        alert(`⚠️ Sentoo payment link for XCG ${amount} is not configured yet. Please use the WhatsApp option.`);
       }
     });
   });
 
-  // Handle "Other" button
+  // "Other" button logic: show/hide custom amount input
   const otherStandardBtn = document.getElementById('otherStandardBtn');
   const otherAmountContainer = document.getElementById('otherAmountContainer');
   const otherAmountInput = document.getElementById('otherAmount');
@@ -413,17 +415,16 @@
     }
   });
 
-  // ========== PHASE 2: GOOGLE APPS SCRIPT INTEGRATION ==========
-  const ENABLE_APPS_SCRIPT = false;  // Set to true for Phase 2
-  const APPS_SCRIPT_URL = "";  // Add your Apps Script URL here
+  // ========== PHASE 2: GOOGLE APPS SCRIPT INTEGRATION (ready for future) ==========
+  const ENABLE_APPS_SCRIPT = false;  // ← Set to true when you deploy Apps Script
+  const APPS_SCRIPT_URL = "";        // ← Paste your Google Apps Script Web App URL here
 
-  // Log to Google Sheets (Phase 2)
+  // Optional: log tip requests to Google Sheets (disabled by default for GitHub)
   async function logToSheets(tipData) {
     if (!ENABLE_APPS_SCRIPT || !APPS_SCRIPT_URL) {
-      console.log("Phase 2: Google Sheets logging ready. Set ENABLE_APPS_SCRIPT=true and add APPS_SCRIPT_URL");
+      console.log("📊 Google Sheets logging ready (Phase 2). Set ENABLE_APPS_SCRIPT=true and add APPS_SCRIPT_URL");
       return;
     }
-    
     try {
       await fetch(APPS_SCRIPT_URL, {
         method: "POST",
@@ -431,17 +432,17 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(tipData)
       });
-      console.log("✅ Tip logged to Google Sheets");
+      console.log("✅ Tip request logged to Google Sheets");
     } catch (err) {
       console.error("❌ Sheet logging error:", err);
     }
   }
 
-  // Send WhatsApp tip (request payment link from worker)
+  // WHATSAPP TIP REQUEST: send message to the staff member asking for payment link
   async function sendWhatsAppTip() {
-    // Determine tip amount
     let finalAmount = null;
     
+    // Check if "Other" amount is active and filled
     if (otherAmountContainer.style.display === 'block' && otherAmountInput.value) {
       const customAmount = parseFloat(otherAmountInput.value);
       if (!isNaN(customAmount) && customAmount > 0) {
@@ -451,18 +452,18 @@
         return;
       }
     } else {
-      // No custom amount selected, prompt user to select a standard amount
-      alert("💎 Please select a standard tip amount from the buttons above, or click 'Other' to enter a custom amount.");
+      // No custom amount selected: prompt user to choose a standard button OR use Other
+      alert("💎 Please select a tip amount:\n• Tap any standard button (5,10,15,20,25,30,50) for direct payment\n• Or click 'Other' to enter a custom amount and request via WhatsApp");
       return;
     }
     
-    // Get description
+    // Get description from textarea
     let description = document.getElementById("description").value.trim();
     if (description === "") {
       description = "Thank you for your service!";
     }
     
-    // Prepare data for logging (Phase 2)
+    // Prepare data for potential Google Sheets logging
     const tipRecord = {
       worker: activeUser.workerName,
       amount: "XCG " + finalAmount,
@@ -473,10 +474,10 @@
       type: "whatsapp_request"
     };
     
-    // Log to Sheets if enabled
+    // Log to Sheets if Phase 2 is enabled
     await logToSheets(tipRecord);
     
-    // Create WhatsApp message for worker
+    // Build WhatsApp message for the worker: they will reply with a payment link
     const message = `${activeUser.workerName} | XCG ${finalAmount} | ${description} | Please send me a Sentoo payment link. Thank you!`;
     const whatsappUrl = `https://wa.me/${activeUser.whatsapp}?text=${encodeURIComponent(message)}`;
     
@@ -484,10 +485,10 @@
     window.open(whatsappUrl, '_blank');
   }
   
-  // Attach WhatsApp button handler
+  // Attach WhatsApp button event listener
   document.getElementById("sendWhatsAppBtn").addEventListener("click", sendWhatsAppTip);
   
-  // Optional: Allow Enter key in custom amount
+  // Optional: allow Enter key in custom amount field to trigger WhatsApp request
   if (otherAmountInput) {
     otherAmountInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
@@ -499,8 +500,12 @@
 </script>
 
 <!-- 
-  ========== GOOGLE APPS SCRIPT CODE (code.gs) ==========
-  Copy this to your Google Apps Script project:
+  ════════════════════════════════════════════════════════════════
+  GOOGLE APPS SCRIPT CODE (code.gs) - FULLY PRESERVED FOR PHASE 2
+  ════════════════════════════════════════════════════════════════
+  
+  Copy this function into your Google Apps Script project (Extensions → Apps Script)
+  Then deploy as Web App and set ENABLE_APPS_SCRIPT = true + APPS_SCRIPT_URL.
   
   function doPost(e) {
     try {
@@ -543,13 +548,14 @@
     }
   }
   
-  Steps for Phase 2:
+  📌 DEPLOYMENT STEPS FOR PHASE 2:
   1. Create a Google Sheet
-  2. Extensions → Apps Script
+  2. Go to Extensions → Apps Script
   3. Paste the doPost() function above
-  4. Deploy → New deployment → Web app
-  5. Set "Execute as" = Me, "Access" = Anyone
-  6. Copy URL and set ENABLE_APPS_SCRIPT = true + APPS_SCRIPT_URL
+  4. Click Deploy → New deployment → Web app
+  5. Execute as: "Me", Who has access: "Anyone"
+  6. Copy the deployment URL
+  7. In this HTML, set: ENABLE_APPS_SCRIPT = true and paste URL as APPS_SCRIPT_URL
 -->
 </body>
 </html>
