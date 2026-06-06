@@ -183,7 +183,17 @@
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(currentUrl)}`;
   document.getElementById("qrCodeImg").src = qrCodeUrl;
   document.getElementById("qrOverlay").style.display = "flex";
-  
+  const SENTOO_LINKS = {
+  5:  "https://pay.sentoo.me/p/a6a1455f-37bf-4e32-803e-b710d32654b9",
+  10: "https://pay.sentoo.me/p/5b756cf0-c5f6-408f-bda8-8fecd500e467",
+  12: "https://pay.sentoo.me/p/03b1ea97-cd4d-4e21-83a3-c06d5a9d0095",
+  15: "https://pay.sentoo.me/p/fb0d2c2d-7299-405f-bfbc-f41c12215c14",
+  18: "https://pay.sentoo.me/p/e5e205ca-cfcd-445d-b19a-81b8c7a15c74",
+  20: "https://pay.sentoo.me/p/7e6b238c-668f-4c48-b3a9-7601ddd31999",
+  25: "https://pay.sentoo.me/p/bb0d1c54-b79e-4651-bc5a-aeb13ef675ce",
+  30: "https://pay.sentoo.me/p/6d3f53ca-6637-4d6b-9bad-eb713ea01b20",
+  50: "https://pay.sentoo.me/p/a2ffb521-80d7-4746-9398-148eae85a03c"
+};
   // Config
   const WHATSAPP = activeUser.whatsapp;
   const WORKER_NAME = activeUser.workerName;
