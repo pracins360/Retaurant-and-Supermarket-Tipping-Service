@@ -5,218 +5,318 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Tip.me · Sentoo</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      background: linear-gradient(145deg, #e0eafc 0%, #cfdef3 100%);
-      font-family: system-ui, 'Segoe UI', 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
+      padding: 20px;
     }
-    .app { width: 100%; max-width: 500px; margin: 0 auto; }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* Main Card */
     .card {
-      background: rgba(255, 255, 255, 0.96);
-      border-radius: 48px;
-      padding: 28px 24px 40px;
-      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(255,255,255,0.5);
-    }
-    .sub {
-      text-align: center;
-      font-size: 16px;
-      font-weight: 500;
-      color: #2c5f4a;
-      background: #e9f5ef;
-      display: inline-block;
-      width: auto;
-      margin: 0 auto 20px;
-      padding: 4px 16px;
-      border-radius: 60px;
-    }
-    
-    /* Image container with QR overlay */
-    .branded-hero {
-      position: relative;
-      margin: 8px 0 24px;
+      background: white;
       border-radius: 32px;
       overflow: hidden;
-      box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     }
-    .branded-hero img {
+
+    /* Banner Image */
+    .banner {
       width: 100%;
       height: auto;
       display: block;
-      border-radius: 32px;
     }
-    
-    /* QR Code Overlay */
-    .qr-overlay {
-      position: absolute;
-      bottom: 15px;
-      right: 15px;
-      background: white;
-      padding: 8px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      backdrop-filter: blur(2px);
-      background: rgba(255,255,255,0.95);
-    }
-    .qr-overlay img {
-      width: 80px;
-      height: 80px;
-      border-radius: 8px;
-    }
-    .qr-overlay span {
-      font-size: 10px;
-      font-weight: bold;
-      color: #1e2a36;
-    }
-    
-    /* Tip grid buttons */
-    .tip-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin: 20px 0 10px;
-      justify-content: center;
-    }
-    .tip-grid button {
-      flex: 1 0 70px;
-      background: #eef2ff;
-      color: #1e3a5f;
-      font-weight: 700;
-      font-size: 18px;
-      padding: 12px 6px;
-      border-radius: 48px;
-      margin: 0;
-      box-shadow: none;
-      transition: all 0.2s;
-      border: 1px solid #cbd5e1;
-      cursor: pointer;
-    }
-    .tip-grid button:hover {
-      background: #25d366;
-      color: white;
-      transform: scale(0.96);
-      border-color: #25d366;
-    }
-    
-    /* For smaller screens */
-    @media (max-width: 480px) {
-      .qr-overlay img { width: 60px; height: 60px; }
-      .qr-overlay { padding: 6px; bottom: 10px; right: 10px; }
-      .qr-overlay span { font-size: 8px; }
-      .tip-grid button { flex: 1 0 60px; font-size: 16px; padding: 8px 4px; }
-    }
-    
-    label { font-weight: 600; font-size: 14px; color: #1e2a36; display: block; margin-top: 18px; margin-bottom: 6px; }
-    select, input, textarea {
-      width: 100%; padding: 14px 16px; font-size: 16px; border-radius: 28px;
-      border: 1.5px solid #e2e8f0; background: white; font-family: inherit;
-      transition: all 0.2s; outline: none;
-    }
-    select:focus, input:focus, textarea:focus { border-color: #25d366; box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.2); }
-    textarea { border-radius: 28px; resize: vertical; min-height: 85px; }
-    .fee { font-size: 13px; color: #5b6e8c; text-align: right; margin: 12px 8px 0 0; }
-    
-    .whatsapp-btn {
-      background: #25d366;
+
+    .banner img {
       width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Content Area */
+    .content {
+      padding: 24px 20px 32px;
+    }
+
+    /* Header Badge */
+    .badge {
+      background: #e8f5e9;
+      color: #2e7d32;
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-align: center;
+      width: auto;
+    }
+
+    /* Title Section */
+    .title-section {
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* Standard Amounts Label */
+    .section-label {
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 12px;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::before {
+      content: "💎";
+      font-size: 18px;
+    }
+
+    /* Tip Grid Buttons */
+    .tip-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .tip-btn {
+      background: #f5f5f5;
+      border: 2px solid #e0e0e0;
+      padding: 14px;
+      border-radius: 16px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .tip-btn:hover {
+      background: #667eea;
+      border-color: #667eea;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .tip-btn.other-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-color: transparent;
+      color: white;
+    }
+
+    /* Other Amount Input */
+    .other-amount-container {
+      margin-bottom: 20px;
+    }
+
+    .other-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 16px;
+      font-size: 16px;
+      font-family: inherit;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .other-input:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .other-input::placeholder {
+      color: #999;
+    }
+
+    /* Description */
+    .description-label {
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 12px;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .description-label::before {
+      content: "📝";
+      font-size: 18px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 16px;
+      font-size: 15px;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 90px;
+      transition: all 0.2s;
+      outline: none;
+      margin-bottom: 20px;
+    }
+
+    textarea:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    /* Send Button */
+    .send-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
       border: none;
-      padding: 16px 10px;
+      padding: 16px;
+      border-radius: 60px;
       font-size: 18px;
       font-weight: 700;
       color: white;
-      border-radius: 60px;
-      margin-top: 28px;
       cursor: pointer;
-      transition: 0.2s;
+      transition: all 0.2s;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      box-shadow: 0 6px 14px rgba(37, 211, 102, 0.35);
+      margin-bottom: 16px;
     }
-    .whatsapp-btn:hover { background: #1da958; transform: scale(0.98); }
-    
-    .footer { margin-top: 24px; text-align: center; font-size: 11px; color: #94a3b8; }
-    .user-badge { 
-      text-align: center; 
-      font-size: 14px; 
-      color: #2c5f4a; 
-      margin-top: 8px; 
-      font-weight: 600; 
-      background: #e9f5ef; 
-      display: inline-block; 
-      width: auto; 
-      padding: 6px 18px; 
-      border-radius: 60px; 
-      margin-bottom: 8px; 
+
+    .send-btn:hover {
+      transform: scale(0.98);
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      color: #999;
+      font-size: 11px;
+      padding-top: 16px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    /* User Badge */
+    .user-badge {
+      text-align: center;
+      font-size: 13px;
+      color: #667eea;
+      font-weight: 600;
+      margin-top: 12px;
+      padding: 8px;
+      background: #f5f3ff;
+      border-radius: 12px;
+    }
+
+    /* QR Overlay (hidden in this design, keeping for Phase 2) */
+    .qr-overlay {
+      display: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .content {
+        padding: 20px 16px 28px;
+      }
+      
+      .tip-btn {
+        padding: 12px;
+        font-size: 16px;
+      }
+      
+      h1 {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
 <body>
-<div class="app">
+<div class="container">
   <div class="card">
-    <div style="text-align: center;">
-      <p class="sub">💚 No cash? I have Sentoo 💚</p>
+    <!-- Banner Image -->
+    <div class="banner">
+      <img src="https://i.ibb.co/C3G8Q5LT/tipping-service.jpg" alt="Tip.me Service">
     </div>
-    
-    <!-- Image with QR code overlay -->
-    <div class="branded-hero">
-      <img id="userImage" src="" alt="Sentoo Tipping">
-      <div class="qr-overlay" id="qrOverlay">
-        <img id="qrCodeImg" src="" alt="Scan QR">
-        <span>Scan to tip</span>
+
+    <div class="content">
+      <!-- Badge -->
+      <div style="text-align: center;">
+        <div class="badge">💚 No cash? I have Sentoo 💚</div>
       </div>
-    </div>
 
-    <div style="text-align: center;">
+      <!-- Title -->
+      <div class="title-section" style="text-align: center;">
+        <h1>TIP.ME</h1>
+        <div class="subtitle">TIPS MADE SIMPLE</div>
+        <div class="subtitle" style="font-size: 12px; color: #999; margin-top: 6px;">Support great service. Enjoy.</div>
+      </div>
+
+      <!-- Standard Amounts Label -->
+      <div class="section-label">STANDARD AMOUNTS</div>
+
+      <!-- Tip Grid -->
+      <div class="tip-grid">
+        <button class="tip-btn" data-tip="5">5</button>
+        <button class="tip-btn" data-tip="10">10</button>
+        <button class="tip-btn" data-tip="15">15</button>
+        <button class="tip-btn" data-tip="20">20</button>
+        <button class="tip-btn" data-tip="25">25</button>
+        <button class="tip-btn" data-tip="30">30</button>
+        <button class="tip-btn" data-tip="50">50</button>
+        <button class="tip-btn other-btn" id="otherStandardBtn">Other</button>
+      </div>
+
+      <!-- Other Amount Input (hidden by default) -->
+      <div class="other-amount-container" id="otherAmountContainer" style="display: none;">
+        <input type="number" id="otherAmount" class="other-input" placeholder="Enter custom amount (XCG)" min="1" step="1">
+      </div>
+
+      <!-- Description Label -->
+      <div class="description-label">Description</div>
+      <textarea id="description" placeholder="Add a personal message...">Exceptional service, great atmosphere!</textarea>
+
+      <!-- Send WhatsApp Button -->
+      <button class="send-btn" id="sendWhatsAppBtn">
+        <span>📱</span> Send WhatsApp Tip
+      </button>
+
+      <div class="footer">
+        Tap button → WhatsApp message → Receive Sentoo payment link
+      </div>
+
+      <!-- User Badge (dynamic) -->
       <div id="userBadge" class="user-badge"></div>
-    </div>
-
-    <label>💎 Standard tip amount</label>
-    <select id="amount">
-      <option value="5">XCG 5</option>
-      <option value="8" selected>XCG 8</option>
-      <option value="10">XCG 10</option>
-      <option value="15">XCG 15</option>
-      <option value="20">XCG 20</option>
-    </select>
-
-    <label>💰 Other amount (optional)</label>
-    <input id="otherAmount" type="number" placeholder="Example: 37" step="1" min="1">
-
-    <label>📝 Description</label>
-    <textarea id="description" placeholder="Thank you for your service.">Exceptional service, great atmosphere!</textarea>
-
-    <div class="fee">⏱️ 3% service fee applies · Powered by Sentoo</div>
-    
-    <!-- Quick tip grid -->
-    <div class="tip-grid">
-      <button data-tip="5">5</button>
-      <button data-tip="10">10</button>
-      <button data-tip="12">12</button>
-      <button data-tip="15">15</button>
-      <button data-tip="18">18</button>
-      <button data-tip="20">20</button>
-      <button data-tip="25">25</button>
-      <button data-tip="30">30</button>
-      <button data-tip="50">50</button>
-    </div>
-    
-    <button class="whatsapp-btn" id="sendWhatsAppBtn">
-      <span>📱</span> Send WhatsApp Tip
-    </button>
-
-    <div class="footer">
-      Tap button above → WhatsApp message → Receive Sentoo payment link
     </div>
   </div>
 </div>
@@ -225,7 +325,6 @@
   // ======================== USER DATABASE ==========================
   const USERS = {
     "purcy": {
-      imageUrl: "<img src="https://i.ibb.co/C3G8Q5LT/tipping-service.jpg">",
       whatsapp: "59995120536",
       workerName: "Purcy",
       sentooLinks: {
@@ -242,11 +341,10 @@
       }
     },
     "david": {
-      imageUrl: "<img src="https://i.ibb.co/C3G8Q5LT/tipping-service.jpg">",
-      whatsapp: "59995120536",
+      whatsapp: "59995120537",
       workerName: "David",
       sentooLinks: {
-        5: "https://pay.sentoo.me/p/david_5_link_placeholder",
+        5: "https://pay.sentoo.me/p/david_5_link",
         8: "https://pay.sentoo.me/p/david_8_link",
         10: "https://pay.sentoo.me/p/david_10_link",
         12: "https://pay.sentoo.me/p/david_12_link",
@@ -259,7 +357,7 @@
       }
     }
   };
-  
+
   // Get user from URL (?user=purcy or ?user=david)
   const urlParams = new URLSearchParams(window.location.search);
   let userId = urlParams.get('user');
@@ -269,61 +367,60 @@
     userId = userId.toLowerCase();
   }
   const activeUser = USERS[userId];
-  
-  // Apply user branding
-  document.getElementById("userImage").src = activeUser.imageUrl;
+
+  // Update user badge
   document.getElementById("userBadge").innerHTML = `✨ Tipping ${activeUser.workerName} ✨`;
-  document.title = `Tip ${activeUser.workerName} · Sentoo`;
-  
-  // Generate QR code for current page URL
-  const currentUrl = window.location.href;
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(currentUrl)}`;
-  document.getElementById("qrCodeImg").src = qrCodeUrl;
-  document.getElementById("qrOverlay").style.display = "flex";
-  
-  // Helper: Get Sentoo payment link for amount
+  document.title = `Tip ${activeUser.workerName} · Tip.me`;
+
+  // Variables
+  let selectedAmount = null;
+  let isOtherAmountMode = false;
+
+  // Helper: Get Sentoo payment link
   function getSentooLink(amount) {
     const numAmount = Number(amount);
     if (activeUser.sentooLinks && activeUser.sentooLinks[numAmount]) {
       return activeUser.sentooLinks[numAmount];
     }
-    // Fallback links (should never happen if configured properly)
-    const fallback = {
-      5: "https://pay.sentoo.me/p/a6a1455f-37bf-4e32-803e-b710d32654b9",
-      10: "https://pay.sentoo.me/p/5b756cf0-c5f6-408f-bda8-8fecd500e467",
-      12: "https://pay.sentoo.me/p/03b1ea97-cd4d-4e21-83a3-c06d5a9d0095",
-      15: "https://pay.sentoo.me/p/fb0d2c2d-7299-405f-bfbc-f41c12215c14",
-      18: "https://pay.sentoo.me/p/e5e205ca-cfcd-445d-b19a-81b8c7a15c74",
-      20: "https://pay.sentoo.me/p/7e6b238c-668f-4c48-b3a9-7601ddd31999",
-      25: "https://pay.sentoo.me/p/bb0d1c54-b79e-4651-bc5a-aeb13ef675ce",
-      30: "https://pay.sentoo.me/p/6d3f53ca-6637-4d6b-9bad-eb713ea01b20",
-      50: "https://pay.sentoo.me/p/a2ffb521-80d7-4746-9398-148eae85a03c"
-    };
-    return fallback[numAmount];
+    // Fallback for custom amounts - use generic link
+    alert("Custom amount support coming soon. Please use standard amounts for direct payment.");
+    return null;
   }
-  
-  // Quick tip buttons - direct to Sentoo payment
-  document.querySelectorAll('.tip-grid button').forEach(btn => {
+
+  // Handle tip button clicks (direct payment)
+  document.querySelectorAll('.tip-btn[data-tip]').forEach(btn => {
     btn.addEventListener('click', () => {
       const amount = btn.getAttribute('data-tip');
       const link = getSentooLink(amount);
       if (link) {
         window.location.href = link;
-      } else {
-        alert(`Sentoo payment link for XCG ${amount} not configured.`);
       }
     });
   });
-  
+
+  // Handle "Other" button
+  const otherStandardBtn = document.getElementById('otherStandardBtn');
+  const otherAmountContainer = document.getElementById('otherAmountContainer');
+  const otherAmountInput = document.getElementById('otherAmount');
+
+  otherStandardBtn.addEventListener('click', () => {
+    if (otherAmountContainer.style.display === 'none') {
+      otherAmountContainer.style.display = 'block';
+      otherAmountInput.focus();
+    } else {
+      otherAmountContainer.style.display = 'none';
+      otherAmountInput.value = '';
+    }
+  });
+
   // ========== PHASE 2: GOOGLE APPS SCRIPT INTEGRATION ==========
-  // Set ENABLE_APPS_SCRIPT to true and add your Apps Script URL when ready
-  const ENABLE_APPS_SCRIPT = false;  // ← Set to true for Phase 2
-  const APPS_SCRIPT_URL = "";  // ← Add your Google Apps Script URL here
-  
-  // Log tip data to Google Sheets (Phase 2)
+  const ENABLE_APPS_SCRIPT = false;  // Set to true for Phase 2
+  const APPS_SCRIPT_URL = "";  // Add your Apps Script URL here
+
+  // Log to Google Sheets (Phase 2)
   async function logToSheets(tipData) {
     if (!ENABLE_APPS_SCRIPT || !APPS_SCRIPT_URL) {
-      console.log("Phase 2: Google Sheets logging disabled. Set ENABLE_APPS_SCRIPT=true and add APPS_SCRIPT_URL");
+      console.log("Phase 2: Google Sheets logging ready. Set ENABLE_APPS_SCRIPT=true and add APPS_SCRIPT_URL");
       return;
     }
     
@@ -339,82 +436,71 @@
       console.error("❌ Sheet logging error:", err);
     }
   }
-  
-  // Send WhatsApp tip message
+
+  // Send WhatsApp tip (request payment link from worker)
   async function sendWhatsAppTip() {
-    // Get standard amount
-    const standardSelect = document.getElementById("amount");
-    const standardValue = standardSelect.value;
+    // Determine tip amount
+    let finalAmount = null;
     
-    // Check custom amount
-    const otherInput = document.getElementById("otherAmount");
-    let otherAmountRaw = otherInput.value.trim();
-    
-    let finalAmount;
-    if (otherAmountRaw !== "") {
-      const parsedOther = parseFloat(otherAmountRaw);
-      if (!isNaN(parsedOther) && parsedOther > 0) {
-        finalAmount = parsedOther.toString();
+    if (otherAmountContainer.style.display === 'block' && otherAmountInput.value) {
+      const customAmount = parseFloat(otherAmountInput.value);
+      if (!isNaN(customAmount) && customAmount > 0) {
+        finalAmount = customAmount;
       } else {
-        alert("⚠️ Invalid custom amount. Using standard tip.");
-        finalAmount = standardValue;
+        alert("⚠️ Please enter a valid custom amount (positive number).");
+        return;
       }
     } else {
-      finalAmount = standardValue;
-    }
-    
-    if (!finalAmount || parseFloat(finalAmount) <= 0) {
-      alert("Please select a valid tip amount.");
+      // No custom amount selected, prompt user to select a standard amount
+      alert("💎 Please select a standard tip amount from the buttons above, or click 'Other' to enter a custom amount.");
       return;
     }
     
+    // Get description
     let description = document.getElementById("description").value.trim();
     if (description === "") {
-      description = "Thank you for your service.";
+      description = "Thank you for your service!";
     }
     
-    // Prepare data for Google Sheets (Phase 2)
+    // Prepare data for logging (Phase 2)
     const tipRecord = {
       worker: activeUser.workerName,
       amount: "XCG " + finalAmount,
       description: description,
       feePercent: 3,
       userId: userId,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      type: "whatsapp_request"
     };
     
-    // Log to Sheets if enabled (Phase 2)
+    // Log to Sheets if enabled
     await logToSheets(tipRecord);
     
-    // Send WhatsApp message
-    const message = `${activeUser.workerName} | XCG ${finalAmount} | ${description} | Please send me a Sentoo order link`;
+    // Create WhatsApp message for worker
+    const message = `${activeUser.workerName} | XCG ${finalAmount} | ${description} | Please send me a Sentoo payment link. Thank you!`;
     const whatsappUrl = `https://wa.me/${activeUser.whatsapp}?text=${encodeURIComponent(message)}`;
     
-    console.log("📱 Opening WhatsApp:", message);
+    console.log("📱 Opening WhatsApp with payment request");
     window.open(whatsappUrl, '_blank');
   }
   
   // Attach WhatsApp button handler
   document.getElementById("sendWhatsAppBtn").addEventListener("click", sendWhatsAppTip);
   
-  // Validate custom amount input
-  document.getElementById("otherAmount").addEventListener("change", function() {
-    let val = parseFloat(this.value);
-    if (this.value !== "" && (isNaN(val) || val <= 0)) {
-      alert("Please enter a positive number.");
-      this.value = "";
-    }
-  });
-  
-  // Image fallback
-  document.getElementById("userImage").onerror = function() {
-    this.src = "https://i.ibb.co/v6nqkx9K/tipping-service.jpg";
-  };
+  // Optional: Allow Enter key in custom amount
+  if (otherAmountInput) {
+    otherAmountInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        sendWhatsAppTip();
+      }
+    });
+  }
 </script>
 
 <!-- 
-  ========== PHASE 2: GOOGLE APPS SCRIPT CODE ==========
-  Copy this to your Google Apps Script project and deploy as Web App:
+  ========== GOOGLE APPS SCRIPT CODE (code.gs) ==========
+  Copy this to your Google Apps Script project:
   
   function doPost(e) {
     try {
@@ -429,7 +515,7 @@
       if (sheet.getLastRow() === 0) {
         sheet.appendRow([
           "Date", "Worker", "Amount", "Description", 
-          "Fee %", "Sentoo Status", "Payout Status", "User ID", "Timestamp"
+          "Fee %", "Status", "Payout Status", "User ID", "Timestamp", "Type"
         ]);
       }
       
@@ -439,10 +525,11 @@
         data.amount,
         data.description,
         data.feePercent || 3,
-        "Pending Sentoo",
+        "Payment Requested",
         "Not Paid Out",
         data.userId || "",
-        data.timestamp || new Date().toISOString()
+        data.timestamp || new Date().toISOString(),
+        data.type || "whatsapp_request"
       ]);
       
       return ContentService
@@ -458,12 +545,11 @@
   
   Steps for Phase 2:
   1. Create a Google Sheet
-  2. Go to Extensions → Apps Script
-  3. Paste the above doPost() function
+  2. Extensions → Apps Script
+  3. Paste the doPost() function above
   4. Deploy → New deployment → Web app
-  5. Set "Execute as" = Me, "Who has access" = Anyone
-  6. Copy the deployment URL
-  7. In this HTML, set ENABLE_APPS_SCRIPT = true and paste URL as APPS_SCRIPT_URL
+  5. Set "Execute as" = Me, "Access" = Anyone
+  6. Copy URL and set ENABLE_APPS_SCRIPT = true + APPS_SCRIPT_URL
 -->
 </body>
 </html>
